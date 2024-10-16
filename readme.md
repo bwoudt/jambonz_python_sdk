@@ -50,10 +50,13 @@ LOGLEVEL=info
 HOST=0.0.0.0
 HTTP_PORT=3000
 
+# WebSocket URL including port
+JAMBONZ_WEBSOCKET_URL=
+
 # Jambonz API credentials
 JAMBONZ_ACCOUNT_SID=<YOUR_JAMBONZ_ACCOUNT_SID>
 JAMBONZ_API_KEY=<YOUR_JAMBONZ_API_KEY>
-JAMBONZ_REST_API_BASE_URL=https://jambonz.cloud
+JAMBONZ_REST_API_BASE_URL=https://api.jambonz.com/v1
 
 # Optional webhook secret for validating incoming requests (can be left empty)
 WEBHOOK_SECRET=<YOUR_WEBHOOK_SECRET>
@@ -87,7 +90,7 @@ The project is structured as follows:
 
 ```bash
 jambonz_python_sdk/
-├── jambonz_sdk/
+├── jambonz/
 │   ├── __init__.py         # Imports main classes and functions
 │   ├── client.py           # Contains JambonzClient for REST API interactions
 │   ├── webhook_response.py # Contains WebhookResponse class for building webhook responses
@@ -104,7 +107,7 @@ jambonz_python_sdk/
 Example: Handling a Webhook
 ```python
 from quart import Quart, request, jsonify
-from jambonz_sdk import WebhookResponse, validate_webhook
+from jambonz import WebhookResponse, validate_webhook
 import os
 
 app = Quart(__name__)
@@ -128,13 +131,13 @@ if __name__ == '__main__':
 ```
 Example: Using the JambonzClient
 ```python
-from jambonz_sdk import JambonzClient
+from jambonz import JambonzClient
 import os
 
 client = JambonzClient(
     account_sid=os.getenv('JAMBONZ_ACCOUNT_SID'),
     api_key=os.getenv('JAMBONZ_API_KEY'),
-    base_url=os.getenv('JAMBONZ_REST_API_BASE_URL', 'https://jambonz.cloud')
+    base_url=os.getenv('JAMBONZ_REST_API_BASE_URL', 'https://api.jambonz.com/v1')
 )
 
 call_data = {
