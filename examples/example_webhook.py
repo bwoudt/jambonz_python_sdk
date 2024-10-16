@@ -1,6 +1,6 @@
 # example_webhook.py
 from quart import Quart, request, jsonify
-from jambonz_sdk import WebhookResponse, validate_webhook
+from jambonz import WebhookResponse, validate_webhook
 from dotenv import load_dotenv
 import os
 import logging
@@ -53,6 +53,35 @@ async def hello_world():
 
     # Return the response as JSON
     return jsonify(response.verbs), 200
+
+@app.route('/call-status', methods=['POST'])
+async def call_status():
+    """
+    Handle call status updates.
+    This endpoint logs the status of the call as reported by Jambonz.
+    """
+    data = await request.json
+    signature = request.headers.get('X-Signature', '')
+
+    # Validate the incoming webhook if a secret is provided
+    if WEBHOOK_SECRET:
+        if not validate_webhook(WEBHOOK_SECRET, signature, data):
+            logger.warning("Invalid webhook signature")
+            return jsonify({"error": "Invalid signature"}), 403
+
+    # Log the incoming call status data
+    logger.info(f"Received call status update: {data}")
+
+    # Example: log the call status and details
+    call_sid = data.get('call_sid')
+    call_status = data.get('call_status')
+    from_number = data.get('from')
+    to_number = data.get('to')
+
+    logger.info(f"Call SID: {call_sid}, Status: {call_status}, From: {from_number}, To: {to_number}")
+
+    # Return a simple 200 response to acknowledge receipt of the call status update
+    return '', 200
 
 if __name__ == '__main__':
     # Run the app with the specified host and port

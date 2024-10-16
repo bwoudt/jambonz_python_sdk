@@ -2,7 +2,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='jambonz_sdk',
+    name='jambonz',
     version='0.1.0',
     description='A Python SDK for interacting with Jambonz CPaaS',
     author='Bjorn Woudt',
@@ -12,7 +12,10 @@ setup(
     install_requires=[
         'quart==0.17.0',
         'requests==2.31.0',
-        'python-dotenv==1.0.0'
+        'python-dotenv==1.0.0',
+        'websockets==11.0.3',
+        'werkzeug==2.0.3',
+        'aiohttp==3.10.10'
     ],
     classifiers=[
         'Programming Language :: Python :: 3',

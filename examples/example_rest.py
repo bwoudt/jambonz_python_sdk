@@ -1,5 +1,5 @@
 # example_rest.py
-from jambonz_sdk import JambonzClient
+from jambonz import JambonzClient
 from dotenv import load_dotenv
 import os
 import logging
@@ -10,7 +10,7 @@ load_dotenv()
 # Load environment variables for authentication
 ACCOUNT_SID = os.getenv('JAMBONZ_ACCOUNT_SID')
 API_KEY = os.getenv('JAMBONZ_API_KEY')
-BASE_URL = os.getenv('JAMBONZ_REST_API_BASE_URL', 'https://jambonz.cloud')
+BASE_URL = os.getenv('JAMBONZ_REST_API_BASE_URL', 'https://api.jambonz.com/v1')
 
 # Initialize the client
 client = JambonzClient(

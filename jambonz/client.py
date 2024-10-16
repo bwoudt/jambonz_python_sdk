@@ -1,7 +1,7 @@
 import requests
 
 class JambonzClient:
-    def __init__(self, account_sid, api_key, base_url='https://jambonz.cloud'):
+    def __init__(self, account_sid, api_key, base_url='https://api.jambonz.com/v1'):
         """
         Initializes the JambonzClient with account credentials and base URL.
         
@@ -53,7 +53,7 @@ class JambonzClient:
         Returns:
             dict: The updated call information.
         """
-        url = f'{self.base_url}/v1/calls/{call_sid}'
+        url = f'{self.base_url}/calls/{call_sid}'
         response = requests.patch(url, json=data, headers=self._get_headers())
         return self._handle_response(response)
 
@@ -67,7 +67,7 @@ class JambonzClient:
         Returns:
             dict: The created call information.
         """
-        url = f'{self.base_url}/v1/calls'
+        url = f'{self.base_url}/calls'
         response = requests.post(url, json=data, headers=self._get_headers())
         return self._handle_response(response)
 
@@ -81,7 +81,7 @@ class JambonzClient:
         Returns:
             dict: Information about the ended call.
         """
-        url = f'{self.base_url}/v1/calls/{call_sid}'
+        url = f'{self.base_url}/calls/{call_sid}'
         response = requests.delete(url, headers=self._get_headers())
         return self._handle_response(response)
 
@@ -95,6 +95,6 @@ class JambonzClient:
         Returns:
             dict: The call status information.
         """
-        url = f'{self.base_url}/v1/calls/{call_sid}'
+        url = f'{self.base_url}/calls/{call_sid}'
         response = requests.get(url, headers=self._get_headers())
         return self._handle_response(response)
